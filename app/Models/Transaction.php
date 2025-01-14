@@ -38,4 +38,9 @@ class Transaction extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function isActived(): bool
+    {
+        return $this->is_paid && $this->ended_at->isFuture();
+    }
 }

@@ -21,4 +21,13 @@ class pricing extends Model
     {
         return $this->hasMany(Transaction::class);
     }
+
+    public function isSubcribedByuser($user_id)
+    {
+        return $this->transactions->
+            where('user_id', $user_id)
+            ->where('is_paid', true)
+            ->where('ended_at', '>=', now())
+            ->exists();
+    }
 }
