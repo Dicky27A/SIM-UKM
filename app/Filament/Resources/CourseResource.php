@@ -6,6 +6,8 @@ use App\Filament\Resources\CourseResource\Pages;
 
 use App\Models\Course;
 use App\Models\CourseSection;
+use App\Filament\Resources\CourseResource\RelationManagers\CourseSectionRelationManager;
+use App\Filament\Resources\CourseResource\RelationManagers\CourseSectionsRelationManager;
 use Doctrine\DBAL\Query\From;
 use Filament\Forms;
 use Filament\Forms\Components\Fieldset;
@@ -18,8 +20,6 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-
-use App\Filament\Resources\CourseResource\RelationManagers\CourseSectionRelationManager;
 
 class CourseResource extends Resource
 {
@@ -112,7 +112,7 @@ class CourseResource extends Resource
     {
         return [
             //
-            
+            CourseSectionsRelationManager::class,
         ];
     }
 
