@@ -3,15 +3,23 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CourseResource\Pages;
-use App\Filament\Resources\CourseResource\RelationManagers;
+
 use App\Models\Course;
+use App\Models\CourseSection;
+use Doctrine\DBAL\Query\From;
 use Filament\Forms;
+use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+
+use App\Filament\Resources\CourseResource\RelationManagers\CourseSectionRelationManager;
 
 class CourseResource extends Resource
 {
@@ -23,7 +31,44 @@ class CourseResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Fieldset::make('Details')
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->label('Name')
+                            ->maxLength(255)
+                            ->required(),
+                        Forms\Components\FileUpload::make('thumbnail')
+                            ->label('Thumbnail')
+                            ->required()
+                            ->image(),
+                    ]),
+
+                Fieldset::make('Additional')
+                    ->schema([
+                        Forms\Components\Repeater::make('benefits')
+                            ->relationship('benefits')
+                            ->schema([
+                                Forms\Components\TextInput::make('name')
+                                    ->required(),
+                            ]),
+
+                        Forms\Components\Textarea::make('about')
+                            ->label('Description')
+                            ->required(),
+
+                        Forms\Components\Select::make('is_popular')
+                            ->options([
+                                //
+                                true => 'Popular',
+                                false => 'Not Popular',
+                            ])
+                            ->required(),
+                        Forms\Components\Select::make('category_id')
+                            ->relationship('category', 'name')
+                            ->searchable()
+                            ->preload()
+                            ->required(),
+                    ]),
             ]);
     }
 
@@ -32,6 +77,21 @@ class CourseResource extends Resource
         return $table
             ->columns([
                 //
+
+                Tables\Columns\ImageColumn::make('thumbnail'),
+
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('category.name'),
+
+                Tables\Columns\IconColumn::make('is_popular')
+                    ->boolean()
+                    ->trueColor('success')
+                    ->falseColor('danger')
+                    ->trueicon('heroicon-o-check-circle')
+                    ->falseicon('heroicon-o-x-circle')
+                    ->label('Popular'),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
@@ -52,6 +112,7 @@ class CourseResource extends Resource
     {
         return [
             //
+            
         ];
     }
 

@@ -18,7 +18,7 @@ class Course extends Model
         'name', // Web Design
         'thumbnail', // web-design.jpg
         'about', // Lorem ipsum dolor sit amet
-        'is_pupolar', // 1
+        'is_popular', // 1
         'category_id', // 1
     ];
 
