@@ -6,7 +6,11 @@ use App\Filament\Resources\SectionContentResource\Pages;
 use App\Filament\Resources\SectionContentResource\RelationManagers;
 use App\Models\SectionContent;
 use Filament\Forms;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -24,6 +28,30 @@ class SectionContentResource extends Resource
         return $form
             ->schema([
                 //
+                Select::make('course_section_id')
+                    ->label('Course Section')
+                    ->options( function () {
+                        return \App\Models\CourseSection::with('course')
+                        ->get()
+                        ->mapWithKeys(function ($section) {
+                            return [
+                                $section->id => $section->course
+                                ? "{$section->course->name} - {$section->name}"
+                                : $section->name,
+                            ];
+                        })
+                        ->toArray();
+                    })
+                    ->searchable()
+                    ->required(),
+
+                TextInput::make('name')
+                ->required()
+                ->maxLength(255),
+
+                RichEditor::make('content')
+                ->columnSpanFull()
+                ->required(),
             ]);
     }
 
