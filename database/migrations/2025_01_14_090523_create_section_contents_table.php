@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('section_contents', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('position');
-            $table->foreignId('course_id')->constrained()->cascadeOnDelete();
+            $table->text('content');
+            $table->foreignId('course_section_id')->constrained()->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();
         });
