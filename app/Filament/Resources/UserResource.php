@@ -64,7 +64,10 @@ class UserResource extends Resource
         return $table
             ->columns([
                 //
-                Tables\Columns\ImageColumn::make('photo'),
+                Tables\Columns\ImageColumn::make('photo')
+                ->label('Photo')
+                ->disk('public') // Pastikan disk yang digunakan benar
+                ->path('uploads/photos'), // Pastikan jalur file benar
                 Tables\Columns\TextColumn::make('name')
                 ->searchable(),
                 Tables\Columns\TextColumn::make('roles.name'),
