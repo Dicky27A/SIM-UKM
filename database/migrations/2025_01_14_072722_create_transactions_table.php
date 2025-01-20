@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('payment_type');
             $table->string('prof')->nullable();
             $table->date('started_at');
-            $table->date('endded_at');
+            $table->date('ended_at');
             $table->timestamps();
             $table->softDeletes();
         });
