@@ -16,6 +16,7 @@ use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Components\Wizard\Step;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
@@ -176,7 +177,7 @@ class TransactionResource extends Resource
                                 ])
                                 ->required(),
 
-                                FileUpload::make('prof')
+                                FileUpload::make('proof')
                                 ->image(),
                                 ]),
 
@@ -195,8 +196,10 @@ class TransactionResource extends Resource
                 TextColumn::make('student.name')
                 ->searchable(),
 
-                TextColumn::make('booking_trx_id')
+                TextColumn::make('boking_trx_id')
                 ->searchable(),
+
+                TextColumn::make('pricing.name'),
 
                 TextColumn::make('created_at'),
 
@@ -204,7 +207,7 @@ class TransactionResource extends Resource
                 ->boolean()
                 ->trueColor('succes')
                 ->falseColor('dengger')
-                ->trueIcon('heroicon-o-x-check-circle')
+                ->trueIcon('heroicon-o-check-circle')
                 ->falseIcon('heroicon-o-x-circle')
                 ->label('Terverivikasi'),
             ])
@@ -213,6 +216,23 @@ class TransactionResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
+
+                Tables\Actions\Action::make('approve')
+                ->label('Approve')
+                ->action(function (Transaction $record) {
+                    $record->is_paid = true;
+                    $record->save();
+
+                    Notification::make()
+                    ->title('Order Approved')
+                    ->success()
+                    ->body('Order has been succesfully approved')
+                    ->send();
+                })
+                ->color('success')
+                ->requiresConfirmation()
+                ->visible(fn (Transaction $record) => !$record->is_paid),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

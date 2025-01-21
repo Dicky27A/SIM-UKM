@@ -21,7 +21,7 @@ return new class extends Migration
             $table->unsignedInteger('total_tax_amount');
             $table->boolean('is_paid');
             $table->string('payment_type');
-            $table->string('prof')->nullable();
+            $table->string('proof')->nullable();
             $table->date('started_at');
             $table->date('ended_at');
             $table->timestamps();
