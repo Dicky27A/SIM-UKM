@@ -58,7 +58,7 @@ class User extends Authenticatable implements FilamentUser
 
     public function transactions()
     {
-        return $this->hasMany(Transaction::class, 'user_id');
+        return $this->belongsTo(Transaction::class, 'user_id');
     }
 
     public function getActiveSubscription()
