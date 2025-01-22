@@ -8,6 +8,6 @@ class FrontController extends Controller
 {
     //
     public function index() {
-        return 'hello Dicky';
+        return 'hello geys saya dicky ';
     }
 }

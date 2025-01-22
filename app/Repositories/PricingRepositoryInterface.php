@@ -1,0 +1,13 @@
+<?php
+
+namespace App\Repository;
+
+use App\Models\Pricing;
+use Illuminate\Support\Collection;
+
+interface PricingRepositoryInterface {
+    public function findById(int $id): ?Pricing;
+
+    public function getAll(): Collection;
+}
+
