@@ -5,8 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Models\Transaction;
 use App\Observers\TransactionObserver;
-use App\Repository\PricingRepository;
-use App\Repository\PricingRepositoryInterface;
+use App\Repositories\PricingRepository;
+use App\Repositories\PricingRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
-        $this->app->singleton(PricingRepositoryInterface::class, PricingRepository::class);
+        $this->app->bind(PricingRepositoryInterface::class, PricingRepository::class);
     }
 
     /**

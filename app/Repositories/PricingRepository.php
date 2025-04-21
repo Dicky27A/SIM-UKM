@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Repository;
+namespace App\Repositories;
 
 use App\Models\Pricing;
+use App\Repositories\PricingRepositoryInterface;
 use Illuminate\Support\Collection;
 
 class PricingRepository implements PricingRepositoryInterface

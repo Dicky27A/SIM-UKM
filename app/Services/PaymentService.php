@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Helpers\TransactionHelper;
 use App\Models\Payment;
 use App\Models\pricing;
+use App\Repositories\PricingRepository as RepositoriesPricingRepository;
 use App\Repositories\TransactionRepository;
 use App\Repository\PricingRepository;
 use Faker\Provider\ar_EG\Payment as Ar_EGPayment;
@@ -19,7 +20,7 @@ class PaymentService
 
     public function __construct(
         MidtransService $midtransService,
-        PricingRepository $pricingRepository,
+        RepositoriesPricingRepository $pricingRepository,
         TransactionRepository $transactionRepository
     )
     {
