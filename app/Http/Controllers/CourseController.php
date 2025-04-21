@@ -13,8 +13,11 @@ class CourseController extends Controller
         $courseByCategory = Course::with('category')
         ->latest()
         ->get()
-        ->groupBy(function ($course)) {
+        ->groupBy(function ($course) {
             return $course->category->name ?? 'Uncategorized';
         });
     }
 }
+
+
+
