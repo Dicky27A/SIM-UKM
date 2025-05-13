@@ -25,6 +25,6 @@ class FrontController extends Controller
     public function index()
     {
         $pricings = $this->pricingRepository->getAll();
-        return view('front.index', compact('pricings'));
+        return view('frontindex', compact('pricings'));
     }
 }
